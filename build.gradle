@@ -1,0 +1,66 @@
+apply plugin: 'application'
+apply plugin: 'gradle-one-jar'
+apply plugin: 'eclipse'
+
+// Use Java 8 by default
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+  main {
+    java {
+      srcDirs = [ 'src' ]  // srcDir 'src'  // This just adds to the set of directories.
+    }
+  }
+
+  test {
+    java {
+      srcDirs = [ 'test' ]  // srcDir 'test'  // This just adds to the set of directories.
+    }
+  }
+}
+
+// Set project level properties
+ext {
+  mainClassName = 'test.dropwizard.HelloWorldApplication'
+  dropWizardVersion = '0.7.0'
+}
+
+// Add Gradle OneJar Plugin, see https://github.com/rholder/gradle-one-jar
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.github.rholder:gradle-one-jar:1.0.3'
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'io.dropwizard:dropwizard-core:' + dropWizardVersion
+  compile 'io.dropwizard:dropwizard-hibernate:' + dropWizardVersion
+  compile 'io.dropwizard:dropwizard-migrations:' + dropWizardVersion
+  compile 'io.dropwizard:dropwizard-auth:' + dropWizardVersion
+  compile 'com.h2database:h2:1.3.168'
+}
+
+task oneJar(type: OneJar) {
+  mainClass = mainClassName
+}
+
+run {
+  args 'server', './conf/settings.json'
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.1'
+}
+
+artifacts {
+  oneJar
+}
