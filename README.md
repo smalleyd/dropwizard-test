@@ -12,8 +12,8 @@ This sample project provides a simple Hello World with Dropwizard and Gradle.
 
 To build the project run "gradle build".
 
-To run the project run "java -jar build/libs/dropwizard-test-standalone.jar server conf/settings.json".
+To start the server run "java -jar build/libs/dropwizard-test-standalone.jar server conf/settings.json".
 
-To test access the following URL from a browser, CURL, or wget:
+To test access use following URL from a browser, CURL, or wget:
 
 * http://localhost:8080/feed
